@@ -4,7 +4,7 @@ async function main () {
     const BuyMeACoffee = await hre.ethers.getContractFactory("BuyMeACoffee");
     const deployedBuyMeACoffee = await BuyMeACoffee.deploy();
 
-    await deployedBuyMeACoffee.deployed;
+    await deployedBuyMeACoffee.waitForDeployment();
 
     console.log("Contract Deployed to:", await deployedBuyMeACoffee.getAddress());
 }
