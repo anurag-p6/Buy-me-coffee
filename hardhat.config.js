@@ -5,8 +5,9 @@ require("dotenv").config();
 module.exports = {
   solidity: "0.8.28",
   networks: {
-    sepolia: {
-      url: process.env.SEPOLIA_RPC,
+    PolkadotHubTestNet: {
+      url: process.env.POLKADOT_HUB_TEST_NET_RPC,
+      chainId: process.env.CHAIN_ID,
       accounts: [process.env.PRIVATE_KEY]
     }
   },
