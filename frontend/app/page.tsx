@@ -1,11 +1,12 @@
-import Image from "next/image";
-import  { Button } from "@/components/ui/button";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-24">
-      Hello World
-      <Button variant="destructive" className="">Click Me</Button>
+    <div className="flex items-center justify-center min-h-screen bg-black w-screen">
+      <div className="flex flex-col items-center">
+      <h1 className="text-white">My App</h1>
+      <ConnectButton />   
+      </div>
     </div>
   );
 }
