@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@rainbow-me/rainbowkit/styles.css';
 import './globals.css';
-
+import Header from '@/components/Header'
 import { Providers } from '@/components/providers';
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className='flex flex-col min-h-screen w-full bg-gray-200'>
+            <Header />
+            <main className='flex-1 mx-auto w-full'>
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </Providers>
       </body>
     </html>
   );
