@@ -1,71 +1,21 @@
 'use client';
 import React, { useState, useRef, ChangeEvent } from 'react';
 import { Upload, User, Globe, Twitter, Github, Instagram, Linkedin, Camera, Save, Loader2 } from 'lucide-react';
+import { ProfileData, SocialLinks, ImagePreview, SocialPlatform, ProfileMetadata } from '@/types/profile';
+import { useImagePreview } from '@/hooks/useImagePreview';
+import { useProfileData } from '@/hooks/useProfileData';
 
-// Type definitions
-interface SocialLinks {
-  website: string;
-  twitter: string;
-  github: string;
-  instagram: string;
-  linkedin: string;
-}
-
-interface ProfileData {
-  name: string;
-  bio: string;
-  profileImage: string | null;
-  headerImage: string | null;
-  socialLinks: SocialLinks;
-}
-
-interface ImagePreview {
-  profile: string | null;
-  header: string | null;
-}
-
-interface SocialPlatform {
-  key: keyof SocialLinks;
-  icon: React.ComponentType<{ className?: string }>;
-  placeholder: string;
-}
-
-interface ProfileMetadata {
-  name: string;
-  bio: string;
-  profileImage: string | null;
-  headerImage: string | null;
-  socialLinks: SocialLinks;
-  createdAt: number;
-}
 
 const ProfileCreationSection: React.FC = () => {
-  const [profileData, setProfileData] = useState<ProfileData>({
-    name: '',
-    bio: '',
-    profileImage: null,
-    headerImage: null,
-    socialLinks: {
-      website: '',
-      twitter: '',
-      github: '',
-      instagram: '',
-      linkedin: ''
-    }
-  });
-  
-  const [imagePreview, setImagePreview] = useState<ImagePreview>({
-    profile: null,
-    header: null
-  });
-  
+  const { profileData, setProfileData } = useProfileData(); // custon hook to manage the profile data
+ 
+  const { imagePreview, setImagePreview } = useImagePreview();
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [isCreatingProfile, setIsCreatingProfile] = useState<boolean>(false);
-  
+
   const profileImageRef = useRef<HTMLInputElement>(null);
   const headerImageRef = useRef<HTMLInputElement>(null);
 
-  // Convert file to base64 for IPFS or on-chain storage
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -79,28 +29,26 @@ const ProfileCreationSection: React.FC = () => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Validate file size (max 2MB)
     if (file.size > 2 * 1024 * 1024) {
       alert('Image size should be less than 2MB');
       return;
     }
 
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       alert('Please select a valid image file');
       return;
     }
 
     setIsUploading(true);
-    
+
     try {
       const base64 = await convertToBase64(file);
-      
+
       setProfileData(prev => ({
         ...prev,
         [imageType === 'profile' ? 'profileImage' : 'headerImage']: base64
       }));
-      
+
       setImagePreview(prev => ({
         ...prev,
         [imageType]: base64
@@ -133,7 +81,7 @@ const ProfileCreationSection: React.FC = () => {
 
   const validateSocialUrl = (platform: keyof SocialLinks, url: string): boolean => {
     if (!url) return true;
-    
+
     const patterns: Record<keyof SocialLinks, RegExp> = {
       website: /^https?:\/\/.+/,
       twitter: /^https?:\/\/(www\.)?(twitter\.com|x\.com)\/.+/,
@@ -141,12 +89,11 @@ const ProfileCreationSection: React.FC = () => {
       instagram: /^https?:\/\/(www\.)?instagram\.com\/.+/,
       linkedin: /^https?:\/\/(www\.)?linkedin\.com\/.+/
     };
-    
+
     return patterns[platform] ? patterns[platform].test(url) : true;
   };
 
   const handleCreateProfile = async (): Promise<void> => {
-    // Validation
     if (!profileData.name.trim()) {
       alert('Please enter your name');
       return;
@@ -157,7 +104,6 @@ const ProfileCreationSection: React.FC = () => {
       return;
     }
 
-    // Validate social URLs
     for (const [platform, url] of Object.entries(profileData.socialLinks) as [keyof SocialLinks, string][]) {
       if (url && !validateSocialUrl(platform, url)) {
         alert(`Please enter a valid ${platform} URL`);
@@ -168,9 +114,6 @@ const ProfileCreationSection: React.FC = () => {
     setIsCreatingProfile(true);
 
     try {
-      // Here you would integrate with your smart contract
-      // Example structure for the smart contract call:
-      
       const profileMetadata: ProfileMetadata = {
         name: profileData.name,
         bio: profileData.bio,
@@ -180,19 +123,10 @@ const ProfileCreationSection: React.FC = () => {
         createdAt: Date.now()
       };
 
-      // Simulated smart contract interaction
       console.log('Creating profile with metadata:', profileMetadata);
-      
-      // Replace this with your actual smart contract call
-      // await contract.createProfile(JSON.stringify(profileMetadata));
-      
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
       alert('Profile created successfully on blockchain!');
-      
-      // Reset form or redirect user
-      
+
     } catch (error) {
       console.error('Error creating profile:', error);
       alert('Error creating profile. Please try again.');
@@ -209,8 +143,9 @@ const ProfileCreationSection: React.FC = () => {
     { key: 'linkedin', icon: Linkedin, placeholder: 'https://linkedin.com/in/username' }
   ];
 
+  // JSX return block remains unchanged
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 py-12 px-4">
+    <div className="min-h-[500px] bg-gradient-to-br from-purple-50 to-blue-50 py-12 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -363,7 +298,7 @@ const ProfileCreationSection: React.FC = () => {
         </div>
 
         {/* Preview Section */}
-        <div className="mt-8 bg-white rounded-2xl shadow-xl p-6">
+        {/* <div className="mt-8 bg-white rounded-2xl shadow-xl p-6">
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Preview</h3>
           <div className="border border-gray-200 rounded-lg overflow-hidden">
             <div className="h-32 bg-gradient-to-r from-purple-500 to-blue-500 relative">
@@ -399,7 +334,7 @@ const ProfileCreationSection: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

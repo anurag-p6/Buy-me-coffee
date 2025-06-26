@@ -1,23 +1,18 @@
-import { NFTStorage } from 'nft.storage'
-import web3Upload  from '@/lib/web3upload'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from "next/server";
+import { pinata } from "@/lib/web3upload";
 
-
-export const POST = async (request: NextRequest) => { 
-   try {
-    const formdata = await request.formData();
-    const file = formdata.get('file') as File;
-
-    if(!file) {
-      return NextResponse.json({ error: 'File is required' }, { status: 400 });
-    }
-
-    const client = web3Upload();
-    const cid = await client.storeBlob(file);
-    const url = `https://nftstorage.link/ipfs/${cid}`;
-
-   } catch (error) {
-      console.log('Error uploading file:', error);
-     return NextResponse.json({ error: (error as Error).message }, { status: 500 });
-   }
+export async function POST(request: NextRequest) {
+  try {
+    const data = await request.formData();
+    const file: File | null = data.get("file") as unknown as File;
+    const { cid } = await pinata.upload.public.file(file)
+    const url = await pinata.gateways.public.convert(cid);
+    return NextResponse.json(url, { status: 200 });
+  } catch (e) {
+    console.log(e);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }

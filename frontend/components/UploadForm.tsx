@@ -1,49 +1,46 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
 
-export default function UploadForm() {
-  const [previewUrl, setPreviewUrl] = useState('')
-  const [uploading, setUploading] = useState(false)
+export default function Home() {
+  const [file, setFile] = useState<File>();
+  const [url, setUrl] = useState<string>("");
+  const [uploading, setUploading] = useState<boolean>(false);
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+  const uploadFile = async () => {
+    try {
+      if (!file) {
+        alert("No file selected");
+        return;
+      }
 
-    setUploading(true)
-
-    const formData = new FormData()
-    formData.append('file', file)
-
-    const res = await fetch('/api/upload-profile', {
-      method: 'POST',
-      body: formData,
-    })
-
-    const data = await res.json()
-
-    if (res.ok) {
-      setPreviewUrl(data.url)
-    } else {
-      alert('Upload failed: ' + data.error)
+      setUploading(true);
+      const data = new FormData();
+      data.set("file", file);
+      const uploadRequest = await fetch("/api/upload-profile", {
+        method: "POST",
+        body: data,
+      });
+      const signedUrl = await uploadRequest.json();
+      setUrl(signedUrl);
+      setUploading(false);
+    } catch (e) {
+      console.log(e);
+      setUploading(false);
+      alert("Trouble uploading file");
     }
+  };
 
-    setUploading(false)
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(e.target?.files?.[0]);
+  };
 
   return (
-    <div className="p-4 space-y-4">
-      <input type="file" accept="image/*" onChange={handleUpload} />
-      {uploading && <p>Uploading...</p>}
-      {previewUrl && (
-        <div>
-          <p className="text-green-600 text-sm">Uploaded Successfully</p>
-          <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500">
-            {previewUrl}
-          </a>
-          <img src={previewUrl} alt="IPFS Image" className="mt-2 w-48 rounded" />
-        </div>
-      )}
-    </div>
-  )
+    <main className="w-full min-h-screen m-auto flex flex-col justify-center items-center">
+      <input type="file" onChange={handleChange} className="border p-2 rounded"/>
+      <button type="button" disabled={uploading} onClick={uploadFile} className="bg-blue-500 text-white p-2 rounded">
+        {uploading ? "Uploading..." : "Upload"}
+      </button>
+    </main>
+  );
 }
