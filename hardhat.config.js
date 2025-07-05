@@ -5,16 +5,16 @@ require("dotenv").config();
 module.exports = {
   solidity: "0.8.28",
   networks: {
-    PolkadotHubTestNet: {
-      url: process.env.POLKADOT_HUB_TEST_NET_RPC,
-      chainId: process.env.CHAIN_ID,
+    sepolia: {
+      url: process.env.SEPOLIA_RPC,
       accounts: [process.env.PRIVATE_KEY]
     }
   },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY
-  },
-  sourcify: {
-    enabled: true
-  } 
-};
+    etherscan: {
+      url: "https://api-sepolia.etherscan.io/api",
+      apiKey: process.env.ETHERSCAN_API_KEY
+    },
+    sourcify: {
+      enabled: true
+    }
+  };

@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 import { useImagePreview } from '@/hooks/useImagePreview';
 import { useProfileData } from '@/hooks/useProfileData';
@@ -7,7 +8,7 @@ export const ProfileView = () => {
   const { imagePreview, setImagePreview } = useImagePreview();
   const { profileData, setProfileData } = useProfileData();
   return (
-    <div className="mt-8 min-h-36 min-w-36 bg-white rounded-2xl shadow-xl p-6">
+    <div className="mt-8 min-h-full min-w-[200px] bg-white rounded-2xl shadow-xl p-6">
       <h3 className="text-xl font-semibold text-gray-900 mb-4">Preview</h3>
       <div className="border border-gray-200 rounded-lg overflow-hidden">
         <div className="h-32 bg-gradient-to-r from-purple-500 to-blue-500 relative">
