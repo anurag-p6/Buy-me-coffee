@@ -3,6 +3,7 @@
 import { useAccount } from 'wagmi';
 import { ethers } from 'ethers';
 import { contractABI, contractAddress } from '@/constants';
+import { Alert } from '@/components/alert';
 
 export default function WithdrawTips() {
   const { isConnected } = useAccount();

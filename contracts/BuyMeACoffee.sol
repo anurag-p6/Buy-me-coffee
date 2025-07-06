@@ -23,6 +23,11 @@ contract BuyMeACoffee {
 
     //address of contract deployer
     address payable owner;
+
+    modifier onlyOwner() {
+      require(msg.sender == owner, "Only owner can call this function");
+      _;
+    }
     
     constructor() {
         owner = payable(msg.sender);
@@ -49,8 +54,9 @@ contract BuyMeACoffee {
    /* 
    *@dev Send the Entire balance on the contract to the owner 
    */
-    function withdrawTips() public {
-       require(owner.send(address(this).balance));
+    function withdrawTips() public onlyOwner{
+       (bool success, ) = owner.call{value: address(this).balance}("");
+       require(success, "Failed to withdraw tips");
     }
     
     /*

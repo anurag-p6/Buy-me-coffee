@@ -30,7 +30,7 @@ export default function Header() {
                   <>
                    <button
                       onClick={openAccountModal}
-                      className=" flex justify-between item-center px-3 py-1 bg-gray-100 border border-gray-300 rounded-md text-sm text-pink-600"
+                      className=" flex justify-between item-center px-3 py-1 bg-gray-100 border border-gray-300 rounded-md text-sm text-blue-600"
                     >
                       {account.displayName}
                     </button>
