@@ -9,6 +9,7 @@ interface Memo {
   timestamp: bigint;
   name: string;
   message: string;
+  amount: bigint;
 }
 
 export default function MemoList() {
@@ -25,6 +26,7 @@ export default function MemoList() {
           timestamp: Number(memo[1]),
           name: memo[2],
           message: memo[3],
+          amount: memo[4],
         }))
         setMemos(cleanMemos.reverse().slice(0, 4));
         // setMemos(data.reverse())
@@ -38,15 +40,19 @@ export default function MemoList() {
 
   return (
     <div className="mt-6 space-y-4">
-      <h2 className="text-xl font-bold">☕ Recent Memos</h2>
+      <h2 className="text-xl font-bold">Recent Memos</h2>
       {memos.length === 0 ? (
         <p className="text-gray-500 text-[10px]">No memos yet. Be the first to send one!</p>
       ) : (memos.map((memo, index) => (
-        <div key={index} className="border min-h-[10px] min-w-full rounded-lg px-4 py-8 shadow-sm">
-          <p className="text-md font-semibold ">💬 {memo.message}</p>
-          <p className="text-[2px] text-gray-600 ">From: {memo.name} {memo.from}</p>
-          <p className="text-[2px] text-gray-400 ">
-            {/* {new Date(memo.timestamp * 1000).toLocaleString()} */}
+        <div key={index} className="border min-h-[10px] px-4 py-6 shadow-sm">
+          <p className="text-[10px] font-semibold ">MSG: {memo.message}</p>
+          <p className="text-[6px] text-yellow-600 ">From: {memo.name} </p>
+          <p className="text-[6px] text-gray-500 ">Amount: {ethers.formatEther(memo.amount)} ETH</p>
+          <p className="text-[6px] text-gray-500 ">
+             {memo.from.slice(0, 6)}...{memo.from.slice(-4)}
+          </p>
+          <p>
+            <small>{new Date(memo.timestamp * 1000).toLocaleString()}</small>
           </p>
         </div>
       )))}
