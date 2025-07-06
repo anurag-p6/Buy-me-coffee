@@ -36,17 +36,18 @@ export default function BuyCoffeeForm() {
       await tx.wait();
       setAlertMessage('☕ Coffee sent successfully!');
       setShowAlert(true);
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      setShowAlert(false);
+      new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
+        setShowAlert(false);
+      });
       setName('');
       setMessage('');
       setAmount('0.001');
     } catch (err) {
-      console.error(err);
       setAlertMessage('Failed to send coffee. Please try again.');
-      setShowAlert(true); 
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      setShowAlert(false);
+      setShowAlert(true);
+      new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
+        setShowAlert(false);
+      });
     }
   };
 
@@ -58,18 +59,18 @@ export default function BuyCoffeeForm() {
       />
     <div className="space-y-4 p-4 border rounded-lg shadow-md">
       <input
-        className="border p-2 w-full"
+        className="border p-2 w-full text-white"
         placeholder="Your Name"
         value= {name}
         onChange={(e) => setName(e.target.value)}
       />
       <textarea
-        className="border p-2 w-full"
+        className="border p-2 w-full text-white"
         placeholder="Your message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <p>
+      <p className="text-sm text-gray-400 mb-2">
         Enter the amount of ETH
       </p>
       <input
@@ -77,14 +78,14 @@ export default function BuyCoffeeForm() {
         step="any" 
         value={amount}
         min="0.001"
-        className="border p-2 w-full"
+        className="border p-2 w-full text-white"
         placeholder="Amount in ETH (default 0.001)"
         onChange={(e) => {
           setAmount(e.target.value);
         }}
       />
       <button 
-      className='bg-white text-black px-4 py-2 rounded-md w-full'
+      className='bg-blue-500 text-white px-4 py-2 rounded-md w-full hover:bg-blue-700 cursor-pointer transition-colors duration-300'
       onClick={sendCoffee}>
         Send Coffee
       </button>
