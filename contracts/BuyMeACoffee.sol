@@ -7,7 +7,8 @@ contract BuyMeACoffee {
        address indexed from,
        uint256 timestamp,
        string name,
-       string message
+       string message,
+       uint256 amount
     );
 
     // Memo Struct.
@@ -16,13 +17,14 @@ contract BuyMeACoffee {
        uint256 timestamp;
        string name;
        string message;
+       uint256 amount;
     }
 
     // List of all the memos recieved from friends
     Memo[] memos;
 
     //address of contract deployer
-    address payable owner;
+    address payable immutable owner;
 
     modifier onlyOwner() {
       require(msg.sender == owner, "Only owner can call this function");
@@ -40,14 +42,16 @@ contract BuyMeACoffee {
           msg.sender,
           block.timestamp,
           _name,
-          _message
+          _message,
+          msg.value
          ));
        
        emit NewMemo(
         msg.sender,
         block.timestamp,
         _name,
-        _message
+        _message,
+         msg.value
         );
     }
 
@@ -66,3 +70,8 @@ contract BuyMeACoffee {
       return memos;
     }
 }
+
+// learning concept
+// Constant | Immutable keywords are gas efficient in this contract we can use use Immutable keyword for the owner address
+// because it is set only once in the constructor and never changes.
+// Constant keyword is used for variables that are not going to change at all in the contract lifetime
