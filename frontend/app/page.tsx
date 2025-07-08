@@ -19,7 +19,7 @@ export default function Home() {
   </main>
 
   {/* Right Side */}
-  <aside className="w-xl md:w-1/3 p-6 bg-white border-l border-gray-300 overflow-y-auto">
+  <aside className="w-xl md:w-1/3 p-4 md:p-6 bg-white overflow-y-auto">
     <MemoList />
   </aside>
 </div>

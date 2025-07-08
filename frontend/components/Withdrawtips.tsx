@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 export default function WithdrawTips() {
   const { isConnected } = useAccount();
- const [ alertMessage, setAlertMessage ] = useState('');
+  const [ alertMessage, setAlertMessage ] = useState('');
   const [ showAlert, setShowAlert ] = useState(false); 
   
   const withdraw = async () => {
@@ -20,6 +20,11 @@ export default function WithdrawTips() {
       });
       return;
     }
+
+    function parseRevertFromMessage(message: string): string | null {
+  const match = message.match(/reverted: "(.*?)"/);
+  return match ? match[1] : null;
+}
 
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -33,8 +38,11 @@ export default function WithdrawTips() {
       new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
         setShowAlert(false);
       });
-    } catch (err) {
-      setAlertMessage('Failed to withdraw');
+    } catch (err: any) {
+      const reason = parseRevertFromMessage(err?.message) || 'An error occurred while withdrawing tips.';
+      console.log(reason);
+
+      setAlertMessage(`${reason}`);
       setShowAlert(true);
       new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
         setShowAlert(false);
@@ -50,11 +58,10 @@ export default function WithdrawTips() {
       />
       <button
         onClick={withdraw}
-        className="mt-4 bg-yellow-700 text-white px-4 py-2 rounded-md hover:bg-emerald-600 hover:pointer cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="mt-4 bg-[#f8383e] text-white px-4 py-2 rounded-md hover:bg-emerald-600 hover:pointer cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         🔐 Withdraw Tips
       </button>
     </>
-
   );
 }
