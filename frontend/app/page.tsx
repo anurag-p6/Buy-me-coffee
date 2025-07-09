@@ -1,11 +1,23 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+'use client'
+import { useEffect, useState } from 'react';
 import BuyCoffeeForm from '@/components/BuyCoffeeForm';
 import MemoList from '@/components/MemoList';
 import WithdrawTips from '@/components/Withdrawtips';
 import CustomConnectWallet from '@/components/CustomConnectWallet';
+import { fetchMemos } from '@/lib/fetchMemos';
+import { Memo } from '@/types/memos';
 
 export default function Home() {
-  
+const [memos, setMemos] = useState<Memo[]>([]);
+   const loadMemos = async () => {
+    const memos = await fetchMemos();
+    setMemos(memos);
+  };
+
+  useEffect(() => {
+    loadMemos();
+  }, []);
+
   return (
     <>
   <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
@@ -15,13 +27,13 @@ export default function Home() {
     <div className="flex justify-center mb-4">
       <CustomConnectWallet />
     </div>
-    <BuyCoffeeForm />
+    <BuyCoffeeForm onSuccess={loadMemos} />
     <WithdrawTips />
   </main>
 
   {/* Right Side */}
   <aside className="w-full md:w-1/3 p-4 md:p-6 bg-white overflow-y-auto">
-    <MemoList />
+    <MemoList memos={memos} />
   </aside>
 </div>
 

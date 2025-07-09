@@ -25,7 +25,7 @@ export default function CustomConnectWallet() {
                 {/* Chain Info Button */}
                 <button
                   onClick={openChainModal}
-                  className="flex items-center px-3 py-1 bg-gray-100 border border-gray-300 rounded-md text-sm text-gray-800 hover:bg-gray-200 cursor-pointer"
+                  className="flex items-center text-[5px] pl-2 pr-4 py-1 md:px-3 md:py-1 bg-gray-100 border border-gray-300 rounded-md md:text-sm text-gray-800 hover:bg-gray-200 cursor-pointer"
                 >
                   {chain.hasIcon && chain.iconUrl && (
                     <Image
@@ -38,17 +38,17 @@ export default function CustomConnectWallet() {
                   )}
                   {chain.name}
                 </button>
-                <div className='flex items-center gap-1 pl-2 rounded-md  bg-white '>
-                  <span className='text-blue-500 mr-4 inline-block'>
-                    {account.displayBalance}
-                  </span>
-                  <button
-                    onClick={openAccountModal}
-                    className=" flex justify-between item-center px-3 py-1 bg-gray-200 border border-gray-300 rounded-md text-sm text-red-500 cursor-pointer"
-                  >
-                    {account.displayName}
-                  </button>
-                </div>
+                <div className="flex items-center text-[10px] md:text-sm gap-1 px-2 py-1 rounded-md bg-white w-fit">
+  <span className="text-blue-500 inline-block">
+    {account.displayBalance}
+  </span>
+  <button
+    onClick={openAccountModal}
+    className="px-2 py-1 md:px-3 md:py-1 bg-gray-200 border border-gray-300 rounded-md text-red-500 cursor-pointer"
+  >
+    {account.displayName}
+  </button>
+</div>
               </>
             )}
           </div>

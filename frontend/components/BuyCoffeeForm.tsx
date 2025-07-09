@@ -6,7 +6,7 @@ import { ethers } from 'ethers';
 import { contractABI, contractAddress } from '@/constants';
 import { Alert } from '@/components/alert';
 
-export default function BuyCoffeeForm() {
+export default function BuyCoffeeForm({ onSuccess }: { onSuccess: () => void }) {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const { isConnected } = useAccount();
@@ -39,6 +39,8 @@ export default function BuyCoffeeForm() {
       new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
         setShowAlert(false);
       });
+
+      onSuccess();
       setName('');
       setMessage('');
       setAmount('0.001');

@@ -3,44 +3,13 @@
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { contractABI, contractAddress } from '@/constants';
+import { fetchMemos } from '@/lib/fetchMemos';
+import { Memo } from '@/types/memos';
 
-interface Memo {
-  from: string;
-  timestamp: bigint;
-  name: string;
-  message: string;
-  amount: bigint;
-}
-
-export default function MemoList() {
-  const [memos, setMemos] = useState<Memo[]>([]);
-  useEffect(() => {
-    const loadMemos = async () => {
-      try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const contract = new ethers.Contract(contractAddress, contractABI, provider);
-        const rawMemos = await contract.getMemos();
-
-        const cleanMemos: Memo[] = rawMemos.map((memo: any) => ({
-          from: memo[0],
-          timestamp: Number(memo[1]),
-          name: memo[2],
-          message: memo[3],
-          amount: memo[4],
-        }))
-        setMemos(cleanMemos.reverse().slice(0, 4));
-        // setMemos(data.reverse())
-      } catch (error) {
-        console.error('Error loading memos:', error as Error);
-      }
-    };
-
-    loadMemos();
-  }, []);
-
+const MemoList = ({ memos }: { memos: Memo[] }) => {
   return (
     <div className="mt-6 space-y-4">
-      <h2 className="text-xl font-bold">Recent Memos</h2>
+      <h2 className="text-xl font-bold w-fit mx-auto">Recent Memos</h2>
       {memos.length === 0 ? (
         <p className="text-gray-500 text-[10px]">No memos yet. Be the first to send one!</p>
       ) : (memos.map((memo, index) => (
@@ -59,3 +28,5 @@ export default function MemoList() {
     </div>
   );
 }
+
+export default MemoList;
