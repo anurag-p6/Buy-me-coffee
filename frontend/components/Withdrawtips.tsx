@@ -56,12 +56,14 @@ export default function WithdrawTips() {
         message={alertMessage}
         display={showAlert ? 'block' : 'none'}
       />
+      <div className="flex justify-center md:justify-start ">
       <button
         onClick={withdraw}
-        className="mt-4 bg-[#f8383e] text-white px-4 py-2 rounded-md hover:bg-emerald-600 hover:pointer cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="mt-4 bg-[#f8383e] text-white px-[10px] py-2 rounded-md hover:bg-emerald-600 hover:pointer cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        🔐 Withdraw Tips
+         Withdraw Tips
       </button>
+      </div>
     </>
   );
 }
