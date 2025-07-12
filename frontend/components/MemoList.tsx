@@ -15,13 +15,13 @@ const MemoList = ({ memos }: { memos: Memo[] }) => {
       ) : (memos.map((memo, index) => (
         <div key={index} className="border min-h-[10px] px-4 py-6 shadow-sm">
           <p className="text-[10px] font-semibold text-blue-600 "><span className="text-gray-500">MSG:</span> {memo.message}</p>
-          <p className="text-[6px] text-yellow-600 "><span className="text-gray-500">From:</span> {memo.name} </p>
-          <p className="text-[6px] text-green-500"><span className="text-gray-500">Amount:</span> {ethers.formatEther(memo.amount)} ETH</p>
-          <p className="text-[6px] text-gray-500 ">
+          <p className="text-[10px] text-yellow-600 "><span className="text-gray-500">From:</span> {memo.name} </p>
+          <p className="text-[10px] text-green-500"><span className="text-gray-500">Amount:</span> {ethers.formatEther(memo.amount)} ETH</p>
+          <p className="text-[10px] text-gray-500 ">
              {memo.from.slice(0, 6)}...{memo.from.slice(-4)}
           </p>
-          <p className='text-[6px] '>
-            <small>{new Date(memo.timestamp * 1000).toLocaleString()}</small>
+          <p className='text-[10px] md:text-[10px]'>
+            {new Date(memo.timestamp * 1000).toLocaleString()}
           </p>
         </div>
       )))}

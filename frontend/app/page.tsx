@@ -22,7 +22,7 @@ const [memos, setMemos] = useState<Memo[]>([]);
     <>
   <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
   {/* Left Side */}
-  <main className="w-full md:w-2/3 p-6 bg-zinc-900 rounded-r-xl text-white">
+  <main className="w-full md:w-2/3 p-6 bg-zinc-900 rounded-b-sm md:rounded-b-none md:rounded-r-xl text-white">
     <h1 className="text-xl md:text-3xl font-bold text-center mb-6">Hey Anon! Buy me a Crypto Coffee</h1>
     <div className="flex justify-center mb-4">
       <CustomConnectWallet />

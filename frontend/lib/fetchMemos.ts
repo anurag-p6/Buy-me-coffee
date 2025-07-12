@@ -3,7 +3,7 @@ import { contractABI, contractAddress } from '@/constants';
 
 export const fetchMemos = async () => {
   try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_SEPOLIA_RPC);
     const contract = new ethers.Contract(contractAddress, contractABI, provider);
     const rawMemos = await contract.getMemos();
 

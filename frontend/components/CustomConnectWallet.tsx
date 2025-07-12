@@ -9,7 +9,7 @@ export default function CustomConnectWallet() {
       {({ account, chain, openConnectModal, openChainModal, openAccountModal, mounted }) => {
         return (
           <div
-            className="flex gap-2 items-center text-sm"
+            className="flex gap-3 items-center text-sm"
             aria-hidden={!mounted}
             style={{ opacity: mounted ? 1 : 0, pointerEvents: mounted ? 'auto' : 'none' }}
           >
@@ -22,10 +22,11 @@ export default function CustomConnectWallet() {
               </button>
             ) : (
               <>
+                {/* Account Info */}
                 {/* Chain Info Button */}
                 <button
                   onClick={openChainModal}
-                  className="flex items-center text-[5px] pl-2 pr-4 py-1 md:px-3 md:py-1 bg-gray-100 border border-gray-300 rounded-md md:text-sm text-gray-800 hover:bg-gray-200 cursor-pointer"
+                  className="flex items-center text-[10px] pl-2 pr-6 py-2 md:px-3 md:py-1 bg-gray-100 border border-gray-300 rounded-md md:text-sm text-gray-800 hover:bg-gray-200 cursor-pointer"
                 >
                   {chain.hasIcon && chain.iconUrl && (
                     <Image
@@ -38,17 +39,17 @@ export default function CustomConnectWallet() {
                   )}
                   {chain.name}
                 </button>
-                <div className="flex items-center text-[10px] md:text-sm gap-1 px-2 py-1 rounded-md bg-white w-fit">
-  <span className="text-blue-500 inline-block">
-    {account.displayBalance}
-  </span>
-  <button
-    onClick={openAccountModal}
-    className="px-2 py-1 md:px-3 md:py-1 bg-gray-200 border border-gray-300 rounded-md text-red-500 cursor-pointer"
-  >
-    {account.displayName}
-  </button>
-</div>
+                <div className="flex items-center md:text-sm gap-1 pl-2 rounded-md bg-white border border-gray-300 w-fit whitespace-nowrap">
+                  <span className="text-blue-500 inline-block text-[10px] md:text-sm">
+                    {account.displayBalance}
+                  </span>
+                  <button
+                    onClick={openAccountModal}
+                    className="md:h-7 h-8 px-2 bg-gray-200 text-[10px] md:text-sm rounded-sm text-red-500 cursor-pointer"
+                  >
+                    {account.displayName}
+                  </button>
+                </div>
               </>
             )}
           </div>
