@@ -36,7 +36,7 @@ contract BuyMeACoffee {
     }
 
     function buyCoffee(string memory _name, string memory _message) public payable  {
-       require(msg.value > 0, "Can't buy coffee with 0 eth");
+       require(msg.value >= 0.001 ether, "Can't buy coffee with < 0.001 eth"); // I'm using the ether to convert the msg.value to wei
 
        memos.push(Memo(
           msg.sender,
