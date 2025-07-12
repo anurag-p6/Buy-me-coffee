@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import CustomConnectWallet from '@/components/CustomConnectWallet'
 import CoffeeSvg from '@/components/ui/CoffeeSvg'
-import Image from 'next/image'
-import UserSvg from '@/components/ui/UserSvg'
 import ChainModalTrigger from '@/components/ui/UserSvg'
 
 function useWindowWidth() {
