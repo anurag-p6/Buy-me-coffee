@@ -9,7 +9,7 @@ export default function CustomConnectWallet() {
       {({ account, chain, openConnectModal, openChainModal, openAccountModal, mounted }) => {
         return (
           <div
-            className="flex gap-3 items-center text-sm"
+            className="flex flex-wrap item-center gap-2 justify-center min-w-0 max-w-full shrink md:gap-3 items-center text-sm"
             aria-hidden={!mounted}
             style={{ opacity: mounted ? 1 : 0, pointerEvents: mounted ? 'auto' : 'none' }}
           >

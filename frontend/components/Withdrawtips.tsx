@@ -33,14 +33,13 @@ export default function WithdrawTips() {
 
       const tx = await contract.withdrawTips();
       await tx.wait();
-      setAlertMessage('🔐 Tips withdrawn successfully!');
+      setAlertMessage('Tips withdrawn successfully!🔥');
       setShowAlert(true);
       new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
         setShowAlert(false);
       });
-    } catch (err: any) {
-      const reason = parseRevertFromMessage(err?.message) || 'An error occurred while withdrawing tips.';
-      console.log(reason);
+    } catch (err) {
+      const reason = parseRevertFromMessage((err as Error)?.message) || 'An error occurred while withdrawing tips.';
 
       setAlertMessage(`${reason}`);
       setShowAlert(true);
@@ -59,7 +58,7 @@ export default function WithdrawTips() {
       <div className="flex justify-center md:justify-start ">
       <button
         onClick={withdraw}
-        className="mt-4 bg-[#f8383e] text-white px-[10px] py-2 rounded-md hover:bg-emerald-600 hover:pointer cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="text-sm mt-4 bg-[#f8383e] text-white px-[10px] py-2 rounded-md hover:bg-emerald-600 hover:pointer cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
          Withdraw Tips
       </button>

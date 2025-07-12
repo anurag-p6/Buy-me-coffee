@@ -37,7 +37,7 @@ export default function BuyCoffeeForm({ onSuccess }: { onSuccess: () => void }) 
         value: ethers.parseEther(amount),
       });
       await tx.wait();
-      setAlertMessage('☕ Coffee sent successfully!');
+      setAlertMessage('Coffee sent successfully!🫡');
       setShowAlert(true);
       new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
         setShowAlert(false);
@@ -48,7 +48,7 @@ export default function BuyCoffeeForm({ onSuccess }: { onSuccess: () => void }) 
       setName('');
       setMessage('');
       setAmount('0.001');
-    } catch (err) {
+    } catch {
       setAlertMessage('Failed to send coffee. Please try again.');
       setIsLoading(false);
       setShowAlert(true);

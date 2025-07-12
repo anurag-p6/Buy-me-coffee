@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
 import { contractABI, contractAddress } from '@/constants';
+import { Memo } from '@/types/memos';
 
 export const fetchMemos = async () => {
   try {
@@ -7,7 +8,7 @@ export const fetchMemos = async () => {
     const contract = new ethers.Contract(contractAddress, contractABI, provider);
     const rawMemos = await contract.getMemos();
 
-    const cleanMemos = rawMemos.map((memo: any) => ({
+    const cleanMemos = rawMemos.map((memo: Memo[]) => ({
       from: memo[0],
       timestamp: Number(memo[1]),
       name: memo[2],

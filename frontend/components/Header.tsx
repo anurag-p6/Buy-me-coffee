@@ -4,6 +4,8 @@ import Link from 'next/link'
 import CustomConnectWallet from '@/components/CustomConnectWallet'
 import CoffeeSvg from '@/components/ui/CoffeeSvg'
 import Image from 'next/image'
+import UserSvg from '@/components/ui/UserSvg'
+import ChainModalTrigger from '@/components/ui/UserSvg'
 
 function useWindowWidth() {
   const [width, setWidth] = useState<number | null>(null)
@@ -29,7 +31,7 @@ export default function Header() {
       </Link>
       <div className="text-sm mr-6">
         {isMobile ? (
-           <Image src="/user.svg" alt="User Image" height={30} width={30} />
+            <ChainModalTrigger />
         ) : (
          <CustomConnectWallet />
         )}

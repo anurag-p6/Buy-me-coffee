@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import '@rainbow-me/rainbowkit/styles.css';
 import './globals.css';
 import Header from '@/components/Header'
@@ -7,7 +6,7 @@ import { Providers } from '@/components/providers';
 import Footer from '@/components/Footer'
 import { Press_Start_2P } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+// const inter = Inter({ subsets: ['latin'] });
 const pressStart2P = Press_Start_2P({
   weight: '400',
   subsets: ['latin'],
@@ -17,6 +16,7 @@ const pressStart2P = Press_Start_2P({
 export const metadata: Metadata = {
   title: 'BrewETH',
   description: 'A platform to support your favorite creators',
+  icons:'coffee.svg'
 };
 
 export default function RootLayout({
