@@ -2,6 +2,10 @@
 pragma solidity ^0.8.20;
 
 contract BuyMeACoffee {
+
+    error notOwner();
+    error withdrawalFailed();
+    error LessThanMinimumAmount();
     // Event to emit when a Memo is created.
     event NewMemo(
        address indexed from,
@@ -26,8 +30,14 @@ contract BuyMeACoffee {
     //address of contract deployer
     address payable immutable owner;
 
+
+    /**
+     * @dev modifier to check if the caller is the owner of the contract
+     */
     modifier onlyOwner() {
-      require(msg.sender == owner, "Only owner can call this function");
+      if(msg.sender != owner) {
+        revert notOwner();
+      }
       _;
     }
     
@@ -35,8 +45,18 @@ contract BuyMeACoffee {
         owner = payable(msg.sender);
     }
 
+    /** 
+     * @notice send the ETH with the specified name and message to the contract
+     * @dev this function is payable
+     * @param _name with memory starage specifier
+     * @param _message with memory starage specifier
+     */
     function buyCoffee(string memory _name, string memory _message) public payable  {
-       require(msg.value >= 0.001 ether, "Can't buy coffee with < 0.001 eth"); // I'm using the ether to convert the msg.value to wei
+      //  require(msg.value >= 0.001 ether, "Can't buy coffee with < 0.001 eth"); // I'm using the ether to convert the msg.value to wei
+
+       if(msg.value < 0.001 ether){
+         revert LessThanMinimumAmount(); 
+      }
 
        memos.push(Memo(
           msg.sender,
@@ -60,7 +80,9 @@ contract BuyMeACoffee {
    */
     function withdrawTips() public onlyOwner{
        (bool success, ) = owner.call{value: address(this).balance}("");
-       require(success, "Failed to withdraw tips");
+       if(!success){
+         revert withdrawalFailed();
+       }
     }
     
     /*
