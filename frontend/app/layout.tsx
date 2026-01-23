@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={pressStart2P.className}>
         <Providers>
-          <div className='flex flex-col min-h-screen w-full bg-gray-200'>
+          <div className='flex flex-col min-h-full w-full bg-white-200'>
             <Header />
             <main className='flex-1 mx-auto w-full'>
               {children}
